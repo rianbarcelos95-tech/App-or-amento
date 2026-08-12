@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Orçamento">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<title>Meu Orçamento</title>
+<style>
+  :root{
+    --paper: #F2F5F1;
+    --paper-2: #E7ECE4;
+    --ink: #1B2A22;
+    --ink-soft: #52645A;
+    --forest: #1E3A5F;
+    --forest-light: #2C577F;
+    --amber: #C97A2B;
+    --red: #B0432E;
+    --line: #C9D2C6;
+    --white: #FCFDFC;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  body{
+    padding-bottom: 90px;
+    padding-top: env(safe-area-inset-top);
+  }
+  .mono{ font-family: ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  header.top{
+    padding: 22px 20px 16px;
+    background: var(--forest);
+    color: var(--white);
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    position:relative; display:flex; align-items:center; gap:10px;
+  }
+  header.top .eyebrow{
+    font-size: 12px; letter-spacing: 0.08em; text-transform:uppercase;
+    opacity:0.7; margin-bottom: 4px;
+  }
+  header.top h1{ margin:0; font-size: 22px; font-weight:700; }
+  .menu-btn{
+    background:rgba(255,255,255,0.14); border:none; border-radius:10px;
+    width:36px; height:36px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    color:var(--white); cursor:pointer;
+  }
+  .menu-btn svg{ width:19px; height:19px; }
+  header.top .head-text{ flex:1; min-width:0; }
+  header.top .eyebrow-row{ display:flex; align-items:center; gap:6px; }
+
+  .ledger{
+    margin: -18px 16px 0;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(31,75,63,0.18);
+    padding: 18px 18px 6px;
+    position: relative;
+    z-index: 2;
+  }
+  .ledger-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding: 9px 0; border-bottom: 1px dashed var(--line);
+    font-size: 14px;
+  }
+  .ledger-row:last-child{ border-bottom:none; }
+  .ledger-row .label{ color: var(--ink-soft); }
+  .ledger-row .value{ font-size:15px; font-weight:600; }
+  .saldo-block{ text-align:center; padding: 14px 0 8px; }
+  .saldo-block .cap{ font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
+  .saldo-block .num{ font-size: 34px; font-weight:800; margin-top:2px; }
+  .saldo-block .num.positivo{ color: var(--forest); }
+  .saldo-block .num.negativo{ color: var(--red); }
+  .saldo-block .sub{ font-size:12px; color:var(--ink-soft); margin-top:2px;}
+
+  main{ padding: 18px 16px 0; max-width:520px; margin:0 auto; }
+
+  section.card{
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--paper-2);
+  }
+  section.card h2{
+    margin:0 0 10px; font-size:15px; font-weight:700;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  section.card h2 .tag{
+    font-size:11px; font-weight:600; color:var(--forest);
+    background: #E3E9F1; padding:3px 8px; border-radius:20px;
+  }
+
+  .item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 10px 0; border-bottom: 1px solid var(--paper-2);
+    gap:10px;
+  }
+  .item:last-child{ border-bottom:none; }
+  .item .info{ min-width:0; flex:1; }
+  .item .info .name{ font-size:14px; font-weight:600; }
+  .item .info .meta{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .item .right{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .item .amount{ font-size:14px; font-weight:700; }
+  .item .amount.neg{ color: var(--red); }
+
+  .icon-btn{
+    border:none; background:none; color:#8A988E; font-size:15px;
+    padding:4px 6px; cursor:pointer; border-radius:6px; display:inline-flex; align-items:center; justify-content:center;
+  }
+  .icon-btn:hover{ background:var(--paper-2); color:var(--ink); }
+  .icon-btn.danger:hover{ background:#FBEAE6; color:var(--red); }
+
+  .btn-antecipar{
+    font-size:11px; font-weight:700; color:var(--forest); background:#E3E9F1;
+    border:none; border-radius:8px; padding:4px 8px; cursor:pointer; margin-top:6px; display:inline-block;
+  }
+
+  .fixo-actions{ margin-top:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .fixo-actions .encerra-info{ font-size:11.5px; color:var(--amber); font-weight:600; }
+  .link-btn{
+    background:none; border:none; padding:0; font-family:inherit; font-size:12px;
+    font-weight:700; color:var(--forest); text-decoration:underline; cursor:pointer;
+  }
+  .fixo-actions.inline-edit{ background:var(--paper); border-radius:10px; padding:8px; width:100%; }
+  .fixo-actions.inline-edit input{ margin-bottom:6px; }
+
+  .bar-wrap{ height:6px; background:var(--paper-2); border-radius:6px; margin-top:6px; overflow:hidden; }
+  .bar-fill{ height:100%; background: var(--forest-light); border-radius:6px; }
+  .status-pill{ font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; text-transform:uppercase; letter-spacing:0.03em; }
+  .status-pill.ativo{ background:#E3E9F1; color:var(--forest); }
+  .status-pill.finalizado{ background:#EFEFEF; color:#8A8A8A; }
+  .status-pill.futuro{ background:#FBF0E2; color:var(--amber); }
+
+  .empty{ font-size:13px; color:var(--ink-soft); text-align:center; padding: 14px 0; }
+
+  form.add-form{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .row2{ display:flex; gap:8px; }
+  .row2 > *{ flex:1; min-width:0; }
+  input, select{
+    font-size:14px; padding:10px 11px; border-radius:10px;
+    border:1px solid var(--line); background:var(--paper); color:var(--ink);
+    font-family: inherit; width:100%;
+  }
+  input:focus, select:focus{ outline:2px solid var(--forest-light); outline-offset:1px; }
+  input::placeholder{ color:#9AA69C; }
+  label.small{ font-size:11px; color:var(--ink-soft); margin-bottom:-4px; display:block; }
+
+  button.btn{
+    border:none; border-radius:10px; padding:11px 14px; font-size:14px; font-weight:700;
+    cursor:pointer; font-family:inherit;
+  }
+  button.btn.primary{ background:var(--forest); color:var(--white); }
+  button.btn.primary:active{ background:var(--forest-light); }
+  button.btn.ghost{ background:var(--paper-2); color:var(--ink); }
+  button.btn.sm{ padding:6px 10px; font-size:12px; }
+
+  .toggle-adv{
+    background:none; border:none; color:var(--forest-light); font-size:12px; font-weight:600;
+    padding:4px 0; text-align:left; cursor:pointer; display:inline-block; margin-top:2px;
+  }
+
+  .simulador{ background: #FBF7F0; border:1px solid #EEDFC4; border-radius:16px; padding:16px; margin-bottom:16px; }
+  .simulador h2{ margin:0 0 4px; font-size:15px; font-weight:700; color:#7A4E14; }
+  .simulador p.hint{ font-size:12px; color:#8A6B3B; margin:0 0 10px; }
+  .sim-result{ margin-top:10px; padding:12px; border-radius:12px; font-size:14px; font-weight:600; text-align:center; }
+  .sim-result.ok{ background:#E3E9F1; color:var(--forest); }
+  .sim-result.aviso{ background:#FBEAE6; color:var(--red); }
+
+  nav.tabs{
+    position:fixed; bottom:0; left:0; right:0;
+    background: var(--white); border-top:1px solid var(--paper-2);
+    display:flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    z-index: 10;
+  }
+  nav.tabs button{
+    flex:1; background:none; border:none; padding:8px 4px; font-size:10.5px;
+    font-weight:600; color:var(--ink-soft); font-family:inherit; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  nav.tabs button svg{ width:20px; height:20px; stroke:currentColor; }
+  nav.tabs button.active{ color:var(--forest); }
+
+  .view{ display:none; }
+  .view.active{ display:block; }
+  .month-label{ text-align:center; font-size:12px; color:var(--ink-soft); margin: 6px 0 14px; }
+
+  .month-panel, .modal-overlay{
+    display:none; position:fixed; inset:0; z-index:50;
+    background:rgba(20,30,25,0.45);
+  }
+  .month-panel.open, .modal-overlay.open{ display:block; }
+  .sheet{
+    position:absolute; top:0; left:0; right:0;
+    background:var(--white); border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+    padding: calc(16px + env(safe-area-inset-top)) 18px 18px;
+    max-height:80vh; overflow-y:auto;
+  }
+  .modal-box{
+    position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+    background:var(--white); border-radius:20px; width:calc(100% - 32px); max-width:440px;
+    padding:20px; max-height:90vh; overflow-y:auto;
+  }
+  .sheet h3, .modal-box h3{ margin:0 0 14px; font-size:16px; }
+  .close-x{ position:absolute; right:16px; top:16px; background:none; border:none; font-size:20px; color:var(--ink-soft); cursor:pointer; }
+  .month-opt{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 4px; border-bottom:1px solid var(--paper-2); font-size:14px;
+    font-weight:600; background:none; border:none;
+    width:100%; text-align:left; color:var(--ink); font-family:inherit; cursor:pointer;
+  }
+  .month-opt.current{ color:var(--forest); }
+  .month-opt .check{ color:var(--forest); font-weight:800; }
+
+  .month-group-toggle{
+    display:flex; justify-content:space-between; align-items:center; width:100%;
+    background:none; border:none; padding:14px 2px 8px; font-family:inherit;
+    font-size:12px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--ink-soft); cursor:pointer; border-bottom:1px solid var(--paper-2);
+  }
+  .month-group-toggle svg{ width:16px; height:16px; transition:transform 0.15s; }
+  .month-group-toggle.expanded svg{ transform:rotate(90deg); }
+  .month-group-list{ display:none; }
+  .month-group-list.open{ display:block; }
+  .month-group-empty{ font-size:12px; color:var(--ink-soft); padding:8px 4px; }
+
+  .saldo-hero{ text-align:center; padding: 30px 10px 10px; }
+  .saldo-hero .cap{ font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
+  .saldo-hero .num{ font-size:40px; font-weight:800; margin-top:6px; }
+  .saldo-hero .num.positivo{ color:var(--forest); }
+  .saldo-hero .num.negativo{ color:var(--red); }
+  .saldo-hero .desc{ font-size:14px; color:var(--ink-soft); margin-top:8px; line-height:1.5; padding:0 12px; }
+  .guardado-box{
+    background:#E3E9F1; border-radius:16px; padding:16px; margin-top:16px; text-align:center;
+  }
+  .guardado-box .cap{ font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--forest); }
+  .guardado-box .num{ font-size:24px; font-weight:800; color:var(--forest); margin-top:4px; }
+  .guardado-box .desc{ font-size:12px; color:#3A5670; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="menu-btn" onclick="abrirMenuMeses()" aria-label="Selecionar mês">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
+  <div class="head-text">
+    <div class="eyebrow-row"><span class="eyebrow" id="dataAtual">—</span></div>
+    <h1>Meu Orçamento</h1>
+  </div>
+</header>
+
+<div class="month-panel" id="monthPanel">
+  <div class="sheet">
+    <button class="close-x" onclick="fecharMenuMeses()">✕</button>
+    <h3>Escolher mês</h3>
+
+    <button class="month-group-toggle" id="toggleFuturo" onclick="toggleGrupo('futuro')">
+      <span>Próximos meses (previsão)</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <div class="month-group-list" id="listaMesesFuturo"></div>
+
+    <button class="month-group-toggle" id="togglePassado" onclick="toggleGrupo('passado')">
+      <span>Mês atual e anteriores</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <div class="month-group-list" id="listaMesesPassado"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR ITEM -->
+<div class="modal-overlay" id="modalEdit">
+  <div class="modal-box">
+    <button class="close-x" onclick="fecharModalEdit()">✕</button>
+    <h3 id="editTitle">Editar Item</h3>
+    <form class="add-form" onsubmit="return salvarEdicao(event)">
+      <input type="hidden" id="editTipo">
+      <input type="hidden" id="editId">
+      <div>
+        <label class="small">Nome / Descrição</label>
+        <input type="text" id="editNome" required>
+      </div>
+      <div>
+        <label class="small">Valor (R$)</label>
+        <input type="number" step="0.01" inputmode="decimal" id="editValor" required>
+      </div>
+      <div id="fieldEditData">
+        <label class="small">Data do Gasto</label>
+        <input type="date" id="editData">
+      </div>
+      <div id="fieldEditFixo">
+        <div style="margin-bottom:8px;">
+          <label class="small">Mês de Início</label>
+          <input type="month" id="editInicio">
+        </div>
+        <div style="margin-bottom:8px;">
+          <label class="small">Nº de Parcelas (Deixe em branco para contínuo)</label>
+          <input type="number" id="editParcelas" placeholder="Ex: 12 ou vazio">
+        </div>
+        <div>
+          <label class="small">Mês de Encerramento (Opcional)</label>
+          <input type="month" id="editFim">
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="btn ghost" type="button" onclick="fecharModalEdit()">Cancelar</button>
+        <button class="btn primary" type="submit">Salvar Alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL ANTECIPAR PARCELA -->
+<div class="modal-overlay" id="modalAntecipar">
+  <div class="modal-box">
+    <button class="close-x" onclick="fecharModalAntecipar()">✕</button>
+    <h3>Antecipar Parcela</h3>
+    <p style="font-size:13px; color:var(--ink-soft); margin-top:-8px;">
+      Isso lançará um gasto no mês atual e avançará +1 parcela no financiamento.
+    </p>
+    <form class="add-form" onsubmit="return confirmarAntecipacao(event)">
+      <input type="hidden" id="anteciparFixoId">
+      <div>
+        <label class="small">Gasto Fixado</label>
+        <input type="text" id="anteciparFixoNome" readonly style="background:var(--paper-2)">
+      </div>
+      <div>
+        <label class="small">Valor Pago na Parcela (R$)</label>
+        <input type="number" step="0.01" inputmode="decimal" id="anteciparValor" placeholder="Ex: 250,00" required>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="btn ghost" type="button" onclick="fecharModalAntecipar()">Cancelar</button>
+        <button class="btn primary" type="submit">Confirmar Antecipação</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="ledger" id="ledgerResumo"></div>
+
+<main>
+
+  <!-- SIMULADOR -->
+  <div class="simulador">
+    <h2>Posso gastar isso?</h2>
+    <p class="hint">Digite um valor e veja o impacto no saldo do mês antes de decidir.</p>
+    <div class="row2">
+      <input type="number" inputmode="decimal" id="simValor" placeholder="Ex: 150,00">
+      <button class="btn primary" onclick="simular()">Simular</button>
+    </div>
+    <div id="simResultado"></div>
+  </div>
+
+  <!-- VIEW: VISÃO GERAL -->
+  <section class="view active" id="view-resumo">
+    <section class="card">
+      <h2>Gastos fixos ativos este mês <span class="tag" id="tagFixos">0</span></h2>
+      <div id="listaFixosResumo"></div>
+    </section>
+    <section class="card">
+      <h2>Gastos lançados este mês <span class="tag" id="tagVariaveis">0</span></h2>
+      <div id="listaVariaveisResumo"></div>
+    </section>
+  </section>
+
+  <!-- VIEW: RECEITAS -->
+  <section class="view" id="view-receitas">
+    <section class="card">
+      <h2>Receitas mensais <span class="tag" id="tagReceitas">0</span></h2>
+      <div id="listaReceitas"></div>
+      <form class="add-form" onsubmit="return addReceita(event)">
+        <input type="text" id="rNome" placeholder="Ex: Salário, Freelance..." required>
+        <div class="row2">
+          <input type="number" step="0.01" inputmode="decimal" id="rValor" placeholder="Valor (R$)" required>
+          <button class="btn primary" type="submit">Adicionar</button>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <!-- VIEW: GASTOS FIXOS -->
+  <section class="view" id="view-fixos">
+    <section class="card">
+      <h2>Gastos fixos / financiados <span class="tag" id="tagFixosTotal">0</span></h2>
+      <div id="listaFixos"></div>
+      <form class="add-form" onsubmit="return addFixo(event)">
+        <input type="text" id="fNome" placeholder="Ex: Moto, Netflix, Aluguel..." required>
+        <div class="row2">
+          <div>
+            <label class="small">Valor (R$)</label>
+            <input type="number" step="0.01" inputmode="decimal" id="fValor" required>
+          </div>
+          <div>
+            <label class="small">Mês de início</label>
+            <input type="month" id="fInicio" required>
+          </div>
+        </div>
+        <div>
+          <label class="small">Nº de parcelas (opcional)</label>
+          <input type="number" id="fParcelas" placeholder="Vazio = contínuo">
+        </div>
+
+        <button type="button" class="toggle-adv" onclick="toggleAdvFixos()">+ Definir mês de encerramento</button>
+
+        <div id="advFixosFields" style="display:none; flex-direction:column; gap:8px;">
+          <div>
+            <label class="small">Mês de encerramento</label>
+            <input type="month" id="fFim">
+          </div>
+        </div>
+
+        <button class="btn primary" type="submit">Adicionar gasto fixo</button>
+      </form>
+    </section>
+  </section>
+
+  <!-- VIEW: GASTOS DO MÊS -->
+  <section class="view" id="view-variaveis">
+    <div class="month-label" id="mesReferencia"></div>
+    <section class="card">
+      <h2>Gastos lançados <span class="tag" id="tagVariaveisTotal">0</span></h2>
+      <div id="listaVariaveis"></div>
+      <form class="add-form" id="formVariavel" onsubmit="return addVariavel(event)">
+        <input type="text" id="vNome" placeholder="Ex: Mercado, Uber, Lazer..." required>
+        <div class="row2">
+          <input type="number" step="0.01" inputmode="decimal" id="vValor" placeholder="Valor (R$)" required>
+          <div>
+            <input type="month" id="vMesDestino" required>
+          </div>
+        </div>
+        <button class="btn primary" type="submit">Lançar Gasto</button>
+      </form>
+    </section>
+  </section>
+
+  <!-- VIEW: SALDO DO MÊS -->
+  <section class="view" id="view-saldo">
+    <div class="month-label" id="mesReferenciaSaldo"></div>
+    <section class="card">
+      <div class="saldo-hero">
+        <div class="cap">Resultado do mês</div>
+        <div class="num" id="saldoHeroNum">R$ 0,00</div>
+        <div class="desc" id="saldoHeroDesc"></div>
+      </div>
+      <div class="guardado-box" id="guardadoBox"></div>
+    </section>
+  </section>
+
+</main>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-view="resumo" onclick="showView('resumo')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    Resumo
+  </button>
+  <button class="tab-btn" data-view="receitas" onclick="showView('receitas')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    Receitas
+  </button>
+  <button class="tab-btn" data-view="fixos" onclick="showView('fixos')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+    Fixos
+  </button>
+  <button class="tab-btn" data-view="variaveis" onclick="showView('variaveis')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    Gastos
+  </button>
+  <button class="tab-btn" data-view="saldo" onclick="showView('saldo')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+    Saldo
+  </button>
+</nav>
+
+<script>
+const STORAGE_KEY = 'orcamento_pessoal_v1';
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return { incomes: [], fixed: [], variable: [] };
+}
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  render();
+}
+
+let data = loadData();
+let abrindoEncerrar = null;
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function brl(v){
+  const n = Number(v)||0;
+  return n.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+}
+function hoje(){ return new Date(); }
+function mesAtualStr(){
+  const d = hoje();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+}
+function nomeMesAno(d){
+  const s = d.toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function nomeMesAnoYM(y, m){
+  return nomeMesAno(new Date(y, m-1, 1));
+}
+
+// --- MÊS EM VISUALIZAÇÃO ---
+const _hoje = hoje();
+let viewY = _hoje.getFullYear();
+let viewM = _hoje.getMonth() + 1;
+function viewKey(){ return viewY + '-' + String(viewM).padStart(2,'0'); }
+function ehMesAtualReal(){ return viewKey() === mesAtualStr(); }
+
+function todosOsMeses(){
+  const keys = new Set([mesAtualStr()]);
+  data.fixed.forEach(f => {
+    if(f.startMonth) keys.add(f.startMonth);
+    if(f.endMonth) keys.add(f.endMonth);
+    const totalInst = Number(f.installments) || 0;
+    if(totalInst > 0 && f.startMonth){
+      const [ay, am] = f.startMonth.split('-').map(Number);
+      const extraPaid = Number(f.advancePaid) || 0;
+      const remainingInst = totalInst - extraPaid;
+      const lastIdx = am - 1 + remainingInst - 1;
+      const ey = ay + Math.floor(lastIdx/12);
+      const em = (lastIdx % 12) + 1;
+      keys.add(ey + '-' + String(em).padStart(2,'0'));
+    }
+  });
+  data.variable.forEach(v => keys.add(v.date.slice(0,7)));
+
+  const [curY, curM] = mesAtualStr().split('-').map(Number);
+  keys.add((curY + 1) + '-' + String(curM).padStart(2,'0'));
+
+  const arr = Array.from(keys).sort();
+  const [minY, minM] = arr[0].split('-').map(Number);
+  const [maxY, maxM] = arr[arr.length - 1].split('-').map(Number);
+
+  let y = minY, m = minM;
+  const filled = [];
+  while(y < maxY || (y === maxY && m <= maxM)){
+    filled.push({y, m, key: y + '-' + String(m).padStart(2,'0')});
+    m++; if(m > 12){ m = 1; y++; }
+  }
+  return filled;
+}
+
+function toggleGrupo(qual){
+  const lista = document.getElementById(qual==='futuro' ? 'listaMesesFuturo' : 'listaMesesPassado');
+  const btn = document.getElementById(qual==='futuro' ? 'toggleFuturo' : 'togglePassado');
+  lista.classList.toggle('open');
+  btn.classList.toggle('expanded');
+}
+
+function abrirMenuMeses(){
+  const todos = todosOsMeses();
+  const curKey = mesAtualStr();
+  const idxAtual = todos.findIndex(m => m.key === curKey);
+
+  const anteriores = todos.slice(0, idxAtual + 1).reverse(); // Passados + Mês Atual
+  const futuros = todos.slice(idxAtual + 1); // Futuros
+
+  document.getElementById('listaMesesPassado').innerHTML = anteriores.length ? anteriores.map(mm => `
+    <button class="month-opt ${mm.key===viewKey() ? 'current':''}" onclick="selecionarMes(${mm.y},${mm.m})">
+      <span>${nomeMesAnoYM(mm.y, mm.m)} ${mm.key===mesAtualStr() ? '· ATUAL' : ''}</span>
+      ${mm.key===viewKey() ? '<span class="check">✓</span>' : ''}
+    </button>
+  `).join('') : '<div class="month-group-empty">Nenhum mês histórico.</div>';
+
+  document.getElementById('listaMesesFuturo').innerHTML = futuros.length ? futuros.map(mm => `
+    <button class="month-opt ${mm.key===viewKey() ? 'current':''}" onclick="selecionarMes(${mm.y},${mm.m})">
+      <span>${nomeMesAnoYM(mm.y, mm.m)} <span style="font-size:11px; color:var(--amber); font-weight:700;">(Previsão)</span></span>
+      ${mm.key===viewKey() ? '<span class="check">✓</span>' : ''}
+    </button>
+  `).join('') : '<div class="month-group-empty">Nenhuma previsão futura.</div>';
+
+  // Abre por padrão o grupo relativo ao mês visualizado
+  const ehFuturo = (viewY*12+viewM) > (function(){ const [cy,cm]=mesAtualStr().split('-').map(Number); return cy*12+cm; })();
+  document.getElementById('listaMesesFuturo').classList.toggle('open', ehFuturo);
+  document.getElementById('toggleFuturo').classList.toggle('expanded', ehFuturo);
+  document.getElementById('listaMesesPassado').classList.toggle('open', !ehFuturo);
+  document.getElementById('togglePassado').classList.toggle('expanded', !ehFuturo);
+
+  document.getElementById('monthPanel').classList.add('open');
+}
+
+fecharMenuMeses = () => document.getElementById('monthPanel').classList.remove('open');
+
+function selecionarMes(y, m){
+  viewY = y; viewM = m;
+  fecharMenuMeses();
+  saveData();
+}
+
+// --- CÁLCULOS FIXOS ---
+function statusFixo(item, refY, refM){
+  const y = refY!==undefined ? refY : viewY;
+  const m = refM!==undefined ? refM : viewM;
+  const [ay, am] = item.startMonth.split('-').map(Number);
+  const monthsElapsed = (y-ay)*12 + (m-am);
+
+  if(monthsElapsed < 0) return {status:'futuro', parcelaAtual:0};
+
+  if(item.endMonth){
+    const [ey, em] = item.endMonth.split('-').map(Number);
+    const monthsUntilEnd = (ey-y)*12 + (em-m);
+    if(monthsUntilEnd < 0) return {status:'finalizado', parcelaAtual: item.installments || 0};
+  }
+
+  const totalInst = Number(item.installments) || 0;
+  const extraPaid = Number(item.advancePaid) || 0;
+  const effectiveElapsed = monthsElapsed + extraPaid;
+
+  if(totalInst > 0 && effectiveElapsed >= totalInst){
+    return {status:'finalizado', parcelaAtual: totalInst};
+  }
+
+  return {status:'ativo', parcelaAtual: totalInst > 0 ? (effectiveElapsed + 1) : (monthsElapsed + 1)};
+}
+
+function dataFinalFixo(item){
+  if(item.endMonth){
+    const [ey, em] = item.endMonth.split('-').map(Number);
+    const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return meses[em-1] + '/' + ey;
+  }
+  const totalInst = Number(item.installments) || 0;
+  if(totalInst > 0){
+    const [ay, am] = item.startMonth.split('-').map(Number);
+    const extraPaid = Number(item.advancePaid) || 0;
+    const remainingInst = totalInst - extraPaid;
+    const lastIdx = am - 1 + remainingInst - 1;
+    const ey = ay + Math.floor(lastIdx/12);
+    const em = (lastIdx % 12) + 1;
+    const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return meses[(em-1+12)%12] + '/' + ey;
+  }
+  return 'Contínuo';
+}
+
+function totalReceitas(){
+  return data.incomes.reduce((s,i)=>s+Number(i.value),0);
+}
+function fixosAtivos(refY, refM){
+  return data.fixed.filter(f => statusFixo(f, refY, refM).status === 'ativo');
+}
+function totalFixosAtivos(refY, refM){
+  return fixosAtivos(refY, refM).reduce((s,f)=>s+Number(f.installmentValue),0);
+}
+function variaveisDoMes(refY, refM){
+  const key = (refY!==undefined ? refY : viewY) + '-' + String(refM!==undefined ? refM : viewM).padStart(2,'0');
+  return data.variable.filter(v => v.date.slice(0,7) === key);
+}
+function totalVariaveisDoMes(refY, refM){
+  return variaveisDoMes(refY, refM).reduce((s,v)=>s+Number(v.value),0);
+}
+function saldoDisponivel(refY, refM){
+  return totalReceitas() - totalFixosAtivos(refY, refM) - totalVariaveisDoMes(refY, refM);
+}
+
+function toggleAdvFixos(){
+  const box = document.getElementById('advFixosFields');
+  box.style.display = box.style.display === 'none' ? 'flex' : 'none';
+}
+
+// Encerrar Gasto Fixo Manualmente
+function toggleEncerrar(id){
+  abrindoEncerrar = (abrindoEncerrar === id) ? null : id;
+  render();
+}
+function confirmarEncerramento(id){
+  const input = document.getElementById('encerraMes_'+id);
+  if(!input || !input.value) return;
+  const item = data.fixed.find(f => f.id === id);
+  if(item) item.endMonth = input.value;
+  abrindoEncerrar = null;
+  saveData();
+}
+function removerEncerramento(id){
+  const item = data.fixed.find(f => f.id === id);
+  if(item) item.endMonth = null;
+  saveData();
+}
+
+// --- ADD ---
+function addReceita(ev){
+  ev.preventDefault();
+  const nome = document.getElementById('rNome').value.trim();
+  const valor = parseFloat(document.getElementById('rValor').value);
+  if(!nome || isNaN(valor)) return false;
+  data.incomes.push({id:uid(), name:nome, value:valor});
+  document.getElementById('rNome').value='';
+  document.getElementById('rValor').value='';
+  saveData();
+  return false;
+}
+
+function addFixo(ev){
+  ev.preventDefault();
+  const nome = document.getElementById('fNome').value.trim();
+  const valor = parseFloat(document.getElementById('fValor').value);
+  const inicio = document.getElementById('fInicio').value;
+  const parcelasVal = document.getElementById('fParcelas').value;
+  const parcelas = parcelasVal ? parseInt(parcelasVal) : null;
+  const fim = document.getElementById('fFim').value || null;
+
+  if(!nome || isNaN(valor) || !inicio) return false;
+
+  data.fixed.push({
+    id:uid(),
+    name:nome,
+    installmentValue:valor,
+    installments:parcelas,
+    startMonth:inicio,
+    endMonth:fim,
+    advancePaid: 0
+  });
+
+  document.getElementById('fNome').value='';
+  document.getElementById('fValor').value='';
+  document.getElementById('fParcelas').value='';
+  document.getElementById('fFim').value='';
+  saveData();
+  return false;
+}
+
+function addVariavel(ev){
+  ev.preventDefault();
+  const nome = document.getElementById('vNome').value.trim();
+  const valor = parseFloat(document.getElementById('vValor').value);
+  const mesDestino = document.getElementById('vMesDestino').value;
+  if(!nome || isNaN(valor) || !mesDestino) return false;
+
+  const d = hoje();
+  const dayStr = String(d.getDate()).padStart(2,'0');
+  const dateStr = mesDestino + '-' + dayStr;
+
+  data.variable.push({id:uid(), name:nome, value:valor, date:dateStr});
+  document.getElementById('vNome').value='';
+  document.getElementById('vValor').value='';
+  saveData();
+  return false;
+}
+
+function removeItem(tipo, id){
+  data[tipo] = data[tipo].filter(i=>i.id!==id);
+  saveData();
+}
+
+// --- EDIÇÃO (LÁPIS) ---
+function abrirModalEdit(tipo, id){
+  const item = data[tipo].find(i=>i.id===id);
+  if(!item) return;
+
+  document.getElementById('editTipo').value = tipo;
+  document.getElementById('editId').value = id;
+  document.getElementById('editNome').value = item.name;
+  document.getElementById('editValor').value = item.value || item.installmentValue;
+
+  const fieldData = document.getElementById('fieldEditData');
+  const fieldFixo = document.getElementById('fieldEditFixo');
+
+  if(tipo === 'variable'){
+    fieldData.style.display = 'block';
+    fieldFixo.style.display = 'none';
+    document.getElementById('editData').value = item.date;
+  } else if(tipo === 'fixed'){
+    fieldData.style.display = 'none';
+    fieldFixo.style.display = 'block';
+    document.getElementById('editInicio').value = item.startMonth || '';
+    document.getElementById('editParcelas').value = item.installments || '';
+    document.getElementById('editFim').value = item.endMonth || '';
+  } else {
+    fieldData.style.display = 'none';
+    fieldFixo.style.display = 'none';
+  }
+
+  document.getElementById('modalEdit').classList.add('open');
+}
+
+function fecharModalEdit(){
+  document.getElementById('modalEdit').classList.remove('open');
+}
+
+function salvarEdicao(ev){
+  ev.preventDefault();
+  const tipo = document.getElementById('editTipo').value;
+  const id = document.getElementById('editId').value;
+  const item = data[tipo].find(i=>i.id===id);
+  if(!item) return false;
+
+  item.name = document.getElementById('editNome').value.trim();
+  const val = parseFloat(document.getElementById('editValor').value);
+
+  if(tipo === 'incomes'){
+    item.value = val;
+  } else if(tipo === 'variable'){
+    item.value = val;
+    item.date = document.getElementById('editData').value;
+  } else if(tipo === 'fixed'){
+    item.installmentValue = val;
+    item.startMonth = document.getElementById('editInicio').value;
+    const parc = document.getElementById('editParcelas').value;
+    item.installments = parc ? parseInt(parc) : null;
+    item.endMonth = document.getElementById('editFim').value || null;
+  }
+
+  fecharModalEdit();
+  saveData();
+  return false;
+}
+
+// --- ANTECIPAR PARCELA ---
+function abrirModalAntecipar(id){
+  const fixo = data.fixed.find(f=>f.id===id);
+  if(!fixo) return;
+
+  document.getElementById('anteciparFixoId').value = id;
+  document.getElementById('anteciparFixoNome').value = fixo.name;
+  document.getElementById('anteciparValor').value = fixo.installmentValue;
+
+  document.getElementById('modalAntecipar').classList.add('open');
+}
+
+function fecharModalAntecipar(){
+  document.getElementById('modalAntecipar').classList.remove('open');
+}
+
+function confirmarAntecipacao(ev){
+  ev.preventDefault();
+  const id = document.getElementById('anteciparFixoId').value;
+  const valor = parseFloat(document.getElementById('anteciparValor').value);
+  const fixo = data.fixed.find(f=>f.id===id);
+  if(!fixo || isNaN(valor)) return false;
+
+  const d = hoje();
+  const dateStr = viewKey() + '-' + String(d.getDate()).padStart(2,'0');
+  data.variable.push({
+    id: uid(),
+    name: 'Antecipação: ' + fixo.name,
+    value: valor,
+    date: dateStr
+  });
+
+  fixo.advancePaid = (Number(fixo.advancePaid) || 0) + 1;
+
+  fecharModalAntecipar();
+  saveData();
+  return false;
+}
+
+// --- SIMULADOR ---
+function simular(){
+  const v = parseFloat(document.getElementById('simValor').value);
+  const box = document.getElementById('simResultado');
+  if(isNaN(v) || v<=0){ box.innerHTML=''; return; }
+  const saldoAtual = saldoDisponivel();
+  const saldoDepois = saldoAtual - v;
+  if(saldoDepois >= 0){
+    box.innerHTML = `<div class="sim-result ok">Dá pra gastar. Depois desse valor, sobram ${brl(saldoDepois)} no mês.</div>`;
+  } else {
+    box.innerHTML = `<div class="sim-result aviso">Cuidado: esse gasto deixaria o mês ${brl(Math.abs(saldoDepois))} negativo.</div>`;
+  }
+}
+
+// --- VIEWS ---
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+}
+
+// --- RENDER ---
+function render(){
+  const labelMes = nomeMesAnoYM(viewY, viewM);
+  document.getElementById('dataAtual').textContent = labelMes + (ehMesAtualReal() ? '' : ' · histórico');
+  document.getElementById('mesReferencia').textContent = 'Referente a ' + labelMes;
+  document.getElementById('mesReferenciaSaldo').textContent = 'Referente a ' + labelMes;
+
+  if(!document.getElementById('vMesDestino').value){
+    document.getElementById('vMesDestino').value = viewKey();
+  }
+  if(!document.getElementById('fInicio').value){
+    document.getElementById('fInicio').value = viewKey();
+  }
+
+  const receitas = totalReceitas();
+  const fixos = totalFixosAtivos();
+  const variaveis = totalVariaveisDoMes();
+  const saldo = saldoDisponivel();
+
+  document.getElementById('ledgerResumo').innerHTML = `
+    <div class="ledger-row"><span class="label">Receitas do mês</span><span class="value mono">${brl(receitas)}</span></div>
+    <div class="ledger-row"><span class="label">Gastos fixos ativos</span><span class="value mono">- ${brl(fixos)}</span></div>
+    <div class="ledger-row"><span class="label">Gastos lançados no mês</span><span class="value mono">- ${brl(variaveis)}</span></div>
+    <div class="saldo-block">
+      <div class="cap">Saldo disponível</div>
+      <div class="num mono ${saldo>=0?'positivo':'negativo'}">${brl(saldo)}</div>
+      <div class="sub">${saldo>=0 ? 'Você ainda tem margem este mês.' : 'O mês já está no vermelho.'}</div>
+    </div>
+  `;
+
+  const ativos = fixosAtivos();
+  document.getElementById('tagFixos').textContent = ativos.length;
+  document.getElementById('listaFixosResumo').innerHTML = ativos.length ? ativos.map(f=>{
+    const st = statusFixo(f);
+    const totalInst = Number(f.installments)||0;
+    const pct = totalInst > 0 ? Math.round((st.parcelaAtual/totalInst)*100) : 100;
+    const parcText = totalInst > 0 ? `Parcela ${st.parcelaAtual}/${totalInst}` : 'Contínuo';
+    return `<div class="item">
+      <div class="info">
+        <div class="name">${f.name}</div>
+        <div class="meta">${parcText} · termina ${dataFinalFixo(f)}</div>
+        ${totalInst > 0 ? `<div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>` : ''}
+      </div>
+      <div class="right"><span class="amount neg mono">${brl(f.installmentValue)}</span></div>
+    </div>`;
+  }).join('') : '<div class="empty">Nenhum gasto fixo ativo neste mês.</div>';
+
+  const vars = variaveisDoMes().slice().reverse();
+  document.getElementById('tagVariaveis').textContent = vars.length;
+  document.getElementById('listaVariaveisResumo').innerHTML = vars.length ? vars.slice(0,6).map(v=>`
+    <div class="item">
+      <div class="info"><div class="name">${v.name}</div><div class="meta">${v.date.split('-').reverse().join('/')}</div></div>
+      <div class="right"><span class="amount neg mono">${brl(v.value)}</span></div>
+    </div>
+  `).join('') : '<div class="empty">Nenhum gasto lançado ainda este mês.</div>';
+
+  document.getElementById('tagReceitas').textContent = data.incomes.length;
+  document.getElementById('listaReceitas').innerHTML = data.incomes.length ? data.incomes.map(i=>`
+    <div class="item">
+      <div class="info"><div class="name">${i.name}</div></div>
+      <div class="right">
+        <span class="amount mono">${brl(i.value)}</span>
+        <button class="icon-btn" onclick="abrirModalEdit('incomes','${i.id}')" title="Editar">✏️</button>
+        <button class="icon-btn danger" onclick="removeItem('incomes','${i.id}')" title="Excluir">✕</button>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">Nenhuma receita cadastrada.</div>';
+
+  document.getElementById('tagFixosTotal').textContent = data.fixed.length;
+  document.getElementById('listaFixos').innerHTML = data.fixed.length ? data.fixed.slice().reverse().map(f=>{
+    const st = statusFixo(f);
+    const totalInst = Number(f.installments)||0;
+    const pct = totalInst > 0 ? Math.min(100, Math.round((st.parcelaAtual/totalInst)*100)) : 100;
+    const pillLabel = st.status==='ativo' ? 'Ativo' : st.status==='finalizado' ? 'Finalizado' : 'Ainda não começou';
+    const parcText = totalInst > 0 ? `Parcela ${st.parcelaAtual}/${totalInst}` : 'Contínuo';
+
+    let acoesEncerra = '';
+    if(f.endMonth){
+      const [ey, em] = f.endMonth.split('-').map(Number);
+      acoesEncerra = `<div class="fixo-actions"><span class="encerra-info">Encerra em ${em}/${ey}</span><button type="button" class="link-btn" onclick="removerEncerramento('${f.id}')">Remover encerramento</button></div>`;
+    } else if(st.status !== 'finalizado'){
+      if(abrindoEncerrar === f.id){
+        acoesEncerra = `<div class="fixo-actions inline-edit">
+          <input type="month" id="encerraMes_${f.id}">
+          <div class="row2">
+            <button type="button" class="btn ghost sm" onclick="confirmarEncerramento('${f.id}')">Confirmar</button>
+            <button type="button" class="link-btn" onclick="toggleEncerrar('${f.id}')">Cancelar</button>
+          </div>
+        </div>`;
+      } else {
+        acoesEncerra = `<div class="fixo-actions"><button type="button" class="link-btn" onclick="toggleEncerrar('${f.id}')">Encerrar este gasto</button></div>`;
+      }
+    }
+
+    return `<div class="item">
+      <div class="info">
+        <div class="name">${f.name} <span class="status-pill ${st.status}">${pillLabel}</span></div>
+        <div class="meta">${st.status==='futuro' ? 'Início ' + f.startMonth.split('-').reverse().join('/') : parcText} · termina ${dataFinalFixo(f)}</div>
+        ${totalInst > 0 ? `<div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>` : ''}
+        ${(st.status==='ativo' && totalInst > 0) ? `<button class="btn-antecipar" onclick="abrirModalAntecipar('${f.id}')">+ Antecipar Parcela</button>` : ''}
+        ${acoesEncerra}
+      </div>
+      <div class="right">
+        <span class="amount mono">${brl(f.installmentValue)}</span>
+        <button class="icon-btn" onclick="abrirModalEdit('fixed','${f.id}')" title="Editar">✏️</button>
+        <button class="icon-btn danger" onclick="removeItem('fixed','${f.id}')" title="Excluir">✕</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty">Nenhum gasto fixo cadastrado.</div>';
+
+  const varsAll = variaveisDoMes().slice().reverse();
+  document.getElementById('tagVariaveisTotal').textContent = varsAll.length;
+  document.getElementById('listaVariaveis').innerHTML = varsAll.length ? varsAll.map(v=>`
+    <div class="item">
+      <div class="info"><div class="name">${v.name}</div><div class="meta">${v.date.split('-').reverse().join('/')}</div></div>
+      <div class="right">
+        <span class="amount neg mono">${brl(v.value)}</span>
+        <button class="icon-btn" onclick="abrirModalEdit('variable','${v.id}')" title="Editar">✏️</button>
+        <button class="icon-btn danger" onclick="removeItem('variable','${v.id}')" title="Excluir">✕</button>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">Nenhum gasto lançado este mês.</div>';
+
+  const saldoMes = saldoDisponivel();
+  const heroNum = document.getElementById('saldoHeroNum');
+  const heroDesc = document.getElementById('saldoHeroDesc');
+  heroNum.textContent = brl(Math.abs(saldoMes));
+  heroNum.className = 'num ' + (saldoMes >= 0 ? 'positivo' : 'negativo');
+  heroDesc.textContent = saldoMes >= 0
+    ? `Sobrou ${brl(saldoMes)} em ${labelMes}.`
+    : `Faltou ${brl(Math.abs(saldoMes))} em ${labelMes} — os gastos passaram as receitas.`;
+
+  const guardadoBox = document.getElementById('guardadoBox');
+  if(saldoMes >= 0){
+    guardadoBox.innerHTML = `
+      <div class="cap">Se você tivesse guardado</div>
+      <div class="num">${brl(saldoMes)}</div>
+      <div class="desc">É o quanto teoricamente sobraria pra poupança neste mês, se todo o saldo fosse guardado.</div>
+    `;
+  } else {
+    guardadoBox.innerHTML = `
+      <div class="cap">Nada a guardar</div>
+      <div class="num">R$ 0,00</div>
+      <div class="desc">Esse mês fechou no vermelho, então não sobrou nada pra guardar.</div>
+    `;
+  }
+}
+
+render();
+</script>
+</body>
+</html>
