@@ -408,13 +408,13 @@
         <input type="text" id="metaNome" placeholder="Ex: Entrada da Casa" required>
         <div>
           <label class="small">Valor alvo (R$)</label>
-          <input type="text" inputmode="numeric" id="metaValorAlvo" placeholder="R$ 0,00" oninput="mascaraMoeda(this)" required>
+          <input type="text" inputmode="numeric" id="metaValorAlvo" placeholder="R$ 0,00" oninput="mascaraMoeda(this); atualizarOpcoesParcelas('metaValorAlvo','metaNumParcelas');" required>
         </div>
         <div>
           <label class="small">Como quer calcular?</label>
-          <select id="metaMetodo" onchange="document.getElementById('metaValorMensalWrap').style.display = this.value==='valorFixo' ? '' : 'none'; document.getElementById('metaParcelasWrap').style.display = this.value==='parcelas' ? '' : 'none';">
+          <select id="metaMetodo" onchange="document.getElementById('metaValorMensalWrap').style.display = this.value==='valorFixo' ? '' : 'none'; document.getElementById('metaParcelasWrap').style.display = this.value==='parcelas' ? '' : 'none'; atualizarOpcoesParcelas('metaValorAlvo','metaNumParcelas');">
             <option value="valorFixo">Por valor fixo mensal</option>
-            <option value="parcelas">Por número de parcelas</option>
+            <option value="parcelas">Por número de parcelas (estilo cartão)</option>
           </select>
         </div>
         <div id="metaValorMensalWrap">
@@ -422,8 +422,8 @@
           <input type="text" inputmode="numeric" id="metaValorMensal" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
         </div>
         <div id="metaParcelasWrap" style="display:none;">
-          <label class="small">Número de parcelas (meses)</label>
-          <input type="number" id="metaNumParcelas" min="1" placeholder="Ex: 24">
+          <label class="small">Número de parcelas</label>
+          <select id="metaNumParcelas"></select>
         </div>
         <button class="btn primary" type="submit">Criar Meta</button>
       </form>
@@ -719,6 +719,13 @@ function loadData(){
   if(!parsed.pagamentos) parsed.pagamentos = []; // migração: dados antigos não tinham controle de pagamento
   if(!parsed.metas) parsed.metas = []; // migração: dados antigos não tinham módulo de metas
   if(!parsed.metasContribuicoes) parsed.metasContribuicoes = [];
+  parsed.metas.forEach(m => {
+    if(!m.mesInicio){
+      // migração: metas criadas antes do controle de data de início usam a contribuição mais antiga, ou o mês atual
+      const contribs = parsed.metasContribuicoes.filter(c => c.metaId === m.id).map(c => c.mes).sort();
+      m.mesInicio = contribs.length ? contribs[0] : (new Date().getFullYear() + '-' + String(new Date().getMonth()+1).padStart(2,'0'));
+    }
+  });
   return parsed;
 }
 function saveData(){
@@ -1108,6 +1115,38 @@ function saldoDisponivel(refY, refM){
 }
 
 // --- METAS ---
+function somarMeses(mesKey, qtd){
+  const [y,m] = mesKey.split('-').map(Number);
+  const idx = y*12 + (m-1) + qtd;
+  const ny = Math.floor(idx/12);
+  const nm = (idx%12)+1;
+  return ny + '-' + String(nm).padStart(2,'0');
+}
+function metaMesFim(m){
+  return somarMeses(m.mesInicio, m.numMeses - 1);
+}
+function metaMesFimFormatado(m){
+  const [fy, fm] = metaMesFim(m).split('-').map(Number);
+  return String(fm).padStart(2,'0') + '/' + fy;
+}
+function gerarLabelParcela(n, valorAlvo, mesInicioKey){
+  const valorMensal = Math.round((valorAlvo/n)*100)/100;
+  const fimKey = somarMeses(mesInicioKey, n-1);
+  const [fy,fm] = fimKey.split('-').map(Number);
+  return `${n}x de ${brl(valorMensal)} /mês (encerra em ${String(fm).padStart(2,'0')}/${fy})`;
+}
+function atualizarOpcoesParcelas(valorInputId, selectId, mesInicioKey, manterSelecionado){
+  const valorAlvo = parseMoeda(document.getElementById(valorInputId).value) || 0;
+  const inicio = mesInicioKey || mesAtualStr();
+  const sel = document.getElementById(selectId);
+  if(!sel) return;
+  const atual = manterSelecionado || sel.value || '1';
+  let html = '';
+  for(let n=1; n<=80; n++){
+    html += `<option value="${n}" ${String(n)===String(atual)?'selected':''}>${gerarLabelParcela(n, valorAlvo, inicio)}</option>`;
+  }
+  sel.innerHTML = html;
+}
 function contribuicoesMeta(metaId){
   return data.metasContribuicoes.filter(c => c.metaId === metaId).length;
 }
@@ -1161,17 +1200,18 @@ function addMeta(ev){
     valorMensal = Math.round((valorAlvo / numMeses) * 100) / 100;
   }
 
-  data.metas.push({ id:uid(), nome, valorAlvo, valorMensal, numMeses });
+  data.metas.push({ id:uid(), nome, valorAlvo, valorMensal, numMeses, mesInicio: mesAtualStr() });
 
   document.getElementById('metaNome').value='';
   document.getElementById('metaValorAlvo').value='';
   document.getElementById('metaValorMensal').value='';
-  document.getElementById('metaNumParcelas').value='';
+  atualizarOpcoesParcelas('metaValorAlvo','metaNumParcelas');
   saveData();
   renderMetasPanel();
   return false;
 }
 function abrirMetasPanel(){
+  atualizarOpcoesParcelas('metaValorAlvo','metaNumParcelas');
   renderMetasPanel();
   document.getElementById('metasPanel').classList.add('open');
 }
@@ -1189,7 +1229,7 @@ function renderMetasPanel(){
     const jaGuardouEsteMes = guardadoEsteMes(m.id);
     return `<div class="meta-detalhe">
       <div class="nome">${m.nome} ${completa ? '<span class="badge-guardado">✓ Concluída</span>' : ''}</div>
-      <div class="alvo">Alvo: ${brl(m.valorAlvo)} · Parcela: ${brl(m.valorMensal)}/mês</div>
+      <div class="alvo">Alvo: ${brl(m.valorAlvo)} · Parcela: ${brl(m.valorMensal)}/mês · Encerra em ${metaMesFimFormatado(m)}</div>
       <div class="meta-progress-wrap"><div class="meta-progress-fill" style="width:${pct}%"></div></div>
       <div class="meta-progress-txt">
         <span>Parcela ${Math.min(guardadas, m.numMeses)} de ${m.numMeses}</span>
@@ -1200,6 +1240,7 @@ function renderMetasPanel(){
           ? `<button type="button" class="pill-btn" onclick="resgatarMeta('${m.id}')">Resgatar deste mês</button>`
           : `<button type="button" class="pill-btn" onclick="guardarMeta('${m.id}')">Guardar parcela deste mês</button>`
         ) : ''}
+        <button class="edit-btn" onclick="abrirEdicao('metas','${m.id}')" aria-label="Editar">${ICONE_LAPIS}</button>
         <button type="button" class="link-btn" onclick="removerMeta('${m.id}')">Excluir meta</button>
       </div>
     </div>`;
@@ -1350,14 +1391,14 @@ function abrirEdicao(tipo, id){
   const item = data[tipo].find(i => i.id === id);
   if(!item) return;
   editContext = {tipo, id};
-  document.getElementById('editNome').value = item.name;
-  
-  const valVal = tipo === 'fixed' ? item.installmentValue : item.value;
+  document.getElementById('editNome').value = tipo === 'metas' ? item.nome : item.name;
+
+  const valVal = tipo === 'fixed' ? item.installmentValue : tipo === 'metas' ? item.valorAlvo : item.value;
   const editValorEl = document.getElementById('editValor');
   editValorEl.value = brl(valVal);
 
   let extra = '';
-  const titulo = tipo === 'incomes' ? 'Editar receita' : tipo === 'fixed' ? 'Editar gasto fixo' : 'Editar gasto';
+  const titulo = tipo === 'incomes' ? 'Editar receita' : tipo === 'fixed' ? 'Editar gasto fixo' : tipo === 'metas' ? 'Editar meta' : 'Editar gasto';
   if(tipo === 'incomes'){
     extra = `
       <label class="checkbox-label" style="margin-top:10px;">
@@ -1408,8 +1449,29 @@ function abrirEdicao(tipo, id){
         <input type="date" id="editVencimento" value="${item.vencimento || ''}">
       </div>
     `;
+  } else if(tipo === 'metas'){
+    extra = `
+      <div>
+        <label class="small">Como quer calcular?</label>
+        <select id="editMetaMetodo" onchange="document.getElementById('editMetaValorMensalWrap').style.display = this.value==='valorFixo' ? '' : 'none'; document.getElementById('editMetaParcelasWrap').style.display = this.value==='parcelas' ? '' : 'none';">
+          <option value="valorFixo">Por valor fixo mensal</option>
+          <option value="parcelas" selected>Por número de parcelas (estilo cartão)</option>
+        </select>
+      </div>
+      <div id="editMetaValorMensalWrap" style="display:none;">
+        <label class="small">Valor mensal (R$)</label>
+        <input type="text" inputmode="numeric" id="editMetaValorMensal" placeholder="R$ 0,00" value="${brl(item.valorMensal)}" oninput="mascaraMoeda(this)">
+      </div>
+      <div id="editMetaParcelasWrap">
+        <label class="small">Número de parcelas</label>
+        <select id="editMetaNumParcelas"></select>
+      </div>
+    `;
   }
   document.getElementById('editExtraFields').innerHTML = extra;
+  if(tipo === 'metas'){
+    atualizarOpcoesParcelas('editValor', 'editMetaNumParcelas', item.mesInicio, item.numMeses);
+  }
   document.getElementById('editModalTitle').textContent = titulo;
   document.getElementById('editModal').classList.add('open');
 }
@@ -1427,8 +1489,29 @@ function salvarEdicao(){
   const nome = document.getElementById('editNome').value.trim();
   const valor = parseMoeda(document.getElementById('editValor').value);
   if(!nome || isNaN(valor) || valor <= 0) return;
+
+  if(tipo === 'metas'){
+    item.nome = nome;
+    item.valorAlvo = valor;
+    const metodo = document.getElementById('editMetaMetodo').value;
+    if(metodo === 'valorFixo'){
+      const valorMensal = parseMoeda(document.getElementById('editMetaValorMensal').value);
+      if(isNaN(valorMensal) || valorMensal <= 0) return;
+      item.valorMensal = valorMensal;
+      item.numMeses = Math.ceil(valor / valorMensal);
+    } else {
+      const numMeses = parseInt(document.getElementById('editMetaNumParcelas').value);
+      if(!numMeses || numMeses <= 0) return;
+      item.numMeses = numMeses;
+      item.valorMensal = Math.round((valor / numMeses) * 100) / 100;
+    }
+    fecharEdicao();
+    saveData();
+    renderMetasPanel();
+    return;
+  }
+
   item.name = nome;
-  
   if(tipo === 'incomes'){
     item.value = valor;
     item.isTemp = document.getElementById('editTemp').checked;
@@ -1760,12 +1843,15 @@ function render(){
       return `<div class="meta-resumo-item">
         <div>
           <div class="name">${m.nome}</div>
-          <div class="meta">${brl(m.valorMensal)}/mês</div>
+          <div class="meta">${brl(m.valorMensal)}/mês · encerra ${metaMesFimFormatado(m)}</div>
         </div>
-        ${jaGuardou
-          ? '<span class="badge-guardado">✓ Guardado</span>'
-          : `<button type="button" class="pill-btn" onclick="guardarMeta('${m.id}')">Guardar</button>`
-        }
+        <div style="display:flex; align-items:center; gap:6px;">
+          ${jaGuardou
+            ? '<span class="badge-guardado">✓ Guardado</span>'
+            : `<button type="button" class="pill-btn" onclick="guardarMeta('${m.id}')">Guardar</button>`
+          }
+          <button class="edit-btn" onclick="abrirEdicao('metas','${m.id}')" aria-label="Editar">${ICONE_LAPIS}</button>
+        </div>
       </div>`;
     }).join('');
   } else {
