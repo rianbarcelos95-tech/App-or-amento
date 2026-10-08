@@ -296,6 +296,36 @@
   .saldo-mini .val.positivo{ color:var(--forest); }
   .saldo-mini .val.negativo{ color:var(--red); }
 
+
+  /* --- Lembretes e notificações --- */
+  .btn-notif{
+    display:block; width:100%; background:var(--forest); color:var(--white); border:none;
+    border-radius:12px; padding:12px 14px; font-family:inherit; font-size:13.5px; font-weight:700;
+    cursor:pointer; margin:0 0 6px;
+  }
+  .notif-status{ font-size:12px; color:var(--ink-soft); margin-bottom:12px; line-height:1.4; }
+  .lembrete-switch{
+    -webkit-appearance:none; appearance:none; width:42px; height:24px; padding:0; border:none;
+    border-radius:24px; background:#C9D2C6; position:relative; cursor:pointer; flex-shrink:0;
+    transition:background .15s;
+  }
+  .lembrete-switch::after{
+    content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%;
+    background:#fff; transition:left .15s;
+  }
+  .lembrete-switch:checked{ background:var(--forest); }
+  .lembrete-switch:checked::after{ left:21px; }
+  .lembrete-check-row{ display:flex; align-items:center; gap:8px; font-size:13px; }
+  .lembrete-check-row input{ width:auto; padding:0; }
+  .toast-app{
+    position:fixed; left:12px; right:12px; top:calc(12px + env(safe-area-inset-top)); z-index:90;
+    background:var(--ink); color:var(--white); border-radius:14px; padding:12px 14px;
+    font-size:13px; line-height:1.4; box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    display:none;
+  }
+  .toast-app.show{ display:block; }
+  .toast-app strong{ display:block; font-size:13.5px; margin-bottom:2px; }
+
   /* --- Aba Pagar --- */
   .status-geral-pill{
     display:flex; align-items:center; gap:8px; border-radius:14px; padding:14px 16px;
@@ -379,7 +409,12 @@
     <button class="close-x" onclick="fecharMenuMeses()">✕</button>
     <h3>Escolher mês</h3>
 
-    <button type="button" class="link-btn" style="margin-bottom:14px; font-size:14px;" onclick="fecharMenuMeses(); abrirMetasPanel();">🎯 Minhas Metas</button>
+    <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px;">
+      <button type="button" class="link-btn" style="font-size:14px;" onclick="fecharMenuMeses(); abrirMetasPanel();">🎯 Minhas Metas</button>
+      <button type="button" class="link-btn" style="font-size:14px;" onclick="fecharMenuMeses(); abrirLembretesPanel();">⏰ Meus Lembretes</button>
+    </div>
+    <button type="button" class="btn-notif" onclick="ativarNotificacoes()">🔔 Ativar Notificações no iPhone/Celular</button>
+    <div class="notif-status"></div>
 
     <button class="month-group-toggle" id="toggleFuturo" onclick="toggleGrupo('futuro')">
       <span>Próximos meses (previsão)</span>
@@ -430,6 +465,47 @@
     </div>
   </div>
 </div>
+
+<div class="month-panel" id="lembretesPanel">
+  <div class="sheet">
+    <button class="close-x" onclick="fecharLembretesPanel()">✕</button>
+    <h3>⏰ Meus Lembretes</h3>
+
+    <button type="button" class="btn-notif" onclick="ativarNotificacoes()">🔔 Ativar Notificações no iPhone/Celular</button>
+    <div class="notif-status"></div>
+    <p class="form-hint">Os avisos disparam enquanto o app estiver aberto ou em segundo plano recente. O iPhone não permite alarmes com o app totalmente fechado sem um servidor de push.</p>
+
+    <div id="listaLembretes"></div>
+
+    <div class="card form-card" style="margin-top:16px; box-shadow:none; border:1px solid var(--paper-2);">
+      <h2 id="lembreteFormTitulo">Novo lembrete</h2>
+      <form class="add-form" onsubmit="return salvarLembrete(event)">
+        <input type="text" id="lembreteTitulo" placeholder="Ex: Rever gastos do dia" required>
+        <div class="row2">
+          <div>
+            <label class="small">Horário</label>
+            <input type="time" id="lembreteHora" value="22:00" required>
+          </div>
+          <div>
+            <label class="small">Frequência</label>
+            <select id="lembreteFreq">
+              <option value="diario">Todos os dias</option>
+              <option value="vencimento">Apenas no dia do vencimento</option>
+            </select>
+          </div>
+        </div>
+        <label class="lembrete-check-row">
+          <input type="checkbox" id="lembreteAtivo" checked>
+          Lembrete ativo
+        </label>
+        <button class="btn primary" type="submit" id="lembreteSubmit">Criar lembrete</button>
+        <button type="button" class="link-btn" id="lembreteCancelar" style="display:none;" onclick="cancelarEdicaoLembrete()">Cancelar edição</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast-app" id="toastApp"></div>
 
 <div class="edit-modal" id="editModal">
   <div class="sheet">
@@ -606,6 +682,8 @@
   <section class="view" id="view-pagar">
     <div id="statusPagarPill"></div>
     <button type="button" class="btn-fatura-cartao" id="btnFaturaCartao" style="display:none;" onclick="pagarFaturaCartao()"></button>
+    <button type="button" class="btn-notif" onclick="ativarNotificacoes()">🔔 Ativar Notificações no iPhone/Celular</button>
+    <div class="notif-status"></div>
 
     <section class="card">
       <h2>O que consigo pagar?</h2>
@@ -719,6 +797,7 @@ function loadData(){
   if(!parsed.pagamentos) parsed.pagamentos = []; // migração: dados antigos não tinham controle de pagamento
   if(!parsed.metas) parsed.metas = []; // migração: dados antigos não tinham módulo de metas
   if(!parsed.metasContribuicoes) parsed.metasContribuicoes = [];
+  if(!parsed.lembretes) parsed.lembretes = []; // migração: dados antigos não tinham lembretes
   parsed.metas.forEach(m => {
     if(!m.mesInicio){
       // migração: metas criadas antes do controle de data de início usam a contribuição mais antiga, ou o mês atual
@@ -1860,6 +1939,7 @@ function render(){
 
   renderPagar();
   renderMetasPanel();
+  renderLembretes();
 }
 
 // --- ABA PAGAR ---
@@ -1927,7 +2007,251 @@ function renderPagar(){
   atualizarTotalSelecionadoPagar();
 }
 
+// --- LEMBRETES E NOTIFICAÇÕES ---
+const DISPAROS_KEY = 'orcamento_notif_disparos_v1';
+let lembreteEditId = null;
+
+function escHtml(t){
+  return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function isoHoje(){
+  const d = hoje();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function rotuloFrequencia(f){
+  return f === 'vencimento' ? 'Apenas no dia do vencimento' : 'Todos os dias';
+}
+
+function mostrarToast(titulo, corpo){
+  const el = document.getElementById('toastApp');
+  if(!el) return;
+  el.innerHTML = '<strong>' + escHtml(titulo) + '</strong>' + escHtml(corpo || '');
+  el.classList.add('show');
+  clearTimeout(mostrarToast._t);
+  mostrarToast._t = setTimeout(() => el.classList.remove('show'), 7000);
+}
+
+function estaInstaladoComoApp(){
+  return window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
+function atualizarStatusNotificacoes(){
+  let txt;
+  if(!('Notification' in window)){
+    txt = 'Este navegador não expõe notificações. No iPhone (iOS 16.4+), adicione o app à Tela de Início, abra pelo ícone e toque no botão de novo.';
+  } else if(Notification.permission === 'granted'){
+    txt = '✅ Notificações ativadas. Toque no botão para enviar uma notificação de teste.';
+  } else if(Notification.permission === 'denied'){
+    txt = '🚫 Notificações bloqueadas. Ative em Ajustes do iPhone > Notificações > este app.';
+  } else {
+    txt = 'Notificações ainda não ativadas neste aparelho.';
+  }
+  document.querySelectorAll('.notif-status').forEach(el => el.textContent = txt);
+}
+
+async function ativarNotificacoes(){
+  if(!('Notification' in window)){
+    alert('Seu navegador não oferece notificações aqui.\n\nNo iPhone: use iOS 16.4 ou mais novo, toque em Compartilhar > "Adicionar à Tela de Início", abra o app pelo ícone criado e toque neste botão de novo.');
+    atualizarStatusNotificacoes();
+    return;
+  }
+  if(Notification.permission === 'granted'){
+    await dispararNotificacao('🔔 Teste de notificação', 'Se você viu isto, os lembretes do Meu Orçamento estão funcionando.', 'teste');
+    atualizarStatusNotificacoes();
+    return;
+  }
+  if(Notification.permission === 'denied'){
+    alert('As notificações estão bloqueadas para este app.\n\nNo iPhone: Ajustes > Notificações > (nome do app ou Safari) e ative "Permitir Notificações". Depois volte e toque no botão.');
+    atualizarStatusNotificacoes();
+    return;
+  }
+  try{
+    const perm = await Notification.requestPermission();
+    atualizarStatusNotificacoes();
+    if(perm === 'granted'){
+      await dispararNotificacao('🔔 Notificações ativadas', 'Você será avisado dos lembretes e vencimentos.', 'ativado');
+      verificarLembretes();
+    } else if(perm === 'denied'){
+      alert('Você não permitiu as notificações. Para ativar depois: Ajustes do iPhone > Notificações > este app.');
+    } else {
+      alert('Nenhuma escolha foi feita. Toque no botão de novo e escolha "Permitir".');
+    }
+  }catch(e){
+    alert('Não foi possível pedir a permissão agora. Se estiver no iPhone, confirme que abriu o app pelo ícone da Tela de Início.');
+  }
+}
+
+async function dispararNotificacao(titulo, corpo, tag){
+  mostrarToast(titulo, corpo); // aviso visível dentro do app (garantido mesmo sem permissão)
+  if(!('Notification' in window) || Notification.permission !== 'granted') return false;
+  try{
+    if('serviceWorker' in navigator){
+      const reg = await navigator.serviceWorker.getRegistration();
+      if(reg && reg.showNotification){
+        await reg.showNotification(titulo, { body: corpo, tag: tag });
+        return true;
+      }
+    }
+  }catch(e){}
+  try{
+    new Notification(titulo, { body: corpo, tag: tag });
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+function lerDisparos(){
+  try{
+    const obj = JSON.parse(localStorage.getItem(DISPAROS_KEY) || '{}');
+    const hojeKey = isoHoje();
+    return obj.dia === hojeKey ? obj : { dia: hojeKey, feitos: [] };
+  }catch(e){ return { dia: isoHoje(), feitos: [] }; }
+}
+function registrarDisparo(chave){
+  const obj = lerDisparos();
+  if(!obj.feitos.includes(chave)) obj.feitos.push(chave);
+  localStorage.setItem(DISPAROS_KEY, JSON.stringify(obj));
+}
+
+function itensVencendoHoje(){
+  const d = hoje();
+  const dia = d.getDate();
+  const cy = d.getFullYear(), cm = d.getMonth()+1;
+  const mesKey = mesAtualStr();
+  const iso = isoHoje();
+  const itens = [];
+  data.fixed.forEach(f => {
+    if(f.diaVencimento === dia && statusFixo(f, cy, cm).status === 'ativo' && !estaPago(f.id, mesKey)){
+      itens.push({ nome: f.name, valor: f.installmentValue });
+    }
+  });
+  data.variable.forEach(v => {
+    if(v.formaPagamento === 'cartao' && !v.pago && v.vencimento === iso){
+      itens.push({ nome: v.name, valor: v.value });
+    }
+  });
+  return itens;
+}
+function textoVencimentos(itens){
+  if(itens.length === 1) return 'HOJE! Pagar ' + brl(itens[0].valor) + ' — ' + itens[0].nome;
+  const total = itens.reduce((s,i) => s + Number(i.valor), 0);
+  return itens.length + ' contas vencem hoje (' + brl(total) + '): ' + itens.map(i => i.nome).join(', ');
+}
+
+function verificarLembretes(){
+  const d = hoje();
+  const agoraMin = d.getHours()*60 + d.getMinutes();
+  const feitos = lerDisparos().feitos;
+  const vencendo = itensVencendoHoje();
+
+  // alerta matinal automático de vencimentos (a partir das 08:00, uma vez por dia)
+  if(vencendo.length && agoraMin >= 8*60 && !feitos.includes('manha')){
+    registrarDisparo('manha');
+    dispararNotificacao('💳 Vencimentos de hoje', textoVencimentos(vencendo), 'manha');
+  }
+
+  // lembretes cadastrados (tolerância de 30 min caso o app estivesse em segundo plano)
+  data.lembretes.forEach(l => {
+    if(!l.ativo || !l.hora) return;
+    const chave = 'lem:' + l.id;
+    if(feitos.includes(chave)) return;
+    const [hh, mm] = l.hora.split(':').map(Number);
+    const alvo = hh*60 + mm;
+    if(agoraMin < alvo || agoraMin - alvo > 30) return;
+    if(l.frequencia === 'vencimento' && !vencendo.length) return;
+    registrarDisparo(chave);
+    const corpo = l.frequencia === 'vencimento' ? textoVencimentos(vencendo) : 'Lembrete das ' + l.hora;
+    dispararNotificacao('⏰ ' + l.titulo, corpo, chave);
+  });
+}
+
+function abrirLembretesPanel(){
+  renderLembretes();
+  atualizarStatusNotificacoes();
+  document.getElementById('lembretesPanel').classList.add('open');
+}
+function fecharLembretesPanel(){
+  document.getElementById('lembretesPanel').classList.remove('open');
+  cancelarEdicaoLembrete();
+}
+function salvarLembrete(ev){
+  ev.preventDefault();
+  const titulo = document.getElementById('lembreteTitulo').value.trim();
+  const hora = document.getElementById('lembreteHora').value;
+  const frequencia = document.getElementById('lembreteFreq').value;
+  const ativo = document.getElementById('lembreteAtivo').checked;
+  if(!titulo || !hora) return false;
+  if(lembreteEditId){
+    const l = data.lembretes.find(x => x.id === lembreteEditId);
+    if(l){ l.titulo = titulo; l.hora = hora; l.frequencia = frequencia; l.ativo = ativo; }
+  } else {
+    data.lembretes.push({ id: uid(), titulo, hora, frequencia, ativo });
+  }
+  cancelarEdicaoLembrete();
+  saveData();
+  verificarLembretes();
+  return false;
+}
+function editarLembrete(id){
+  const l = data.lembretes.find(x => x.id === id);
+  if(!l) return;
+  lembreteEditId = id;
+  document.getElementById('lembreteTitulo').value = l.titulo;
+  document.getElementById('lembreteHora').value = l.hora;
+  document.getElementById('lembreteFreq').value = l.frequencia;
+  document.getElementById('lembreteAtivo').checked = !!l.ativo;
+  document.getElementById('lembreteFormTitulo').textContent = 'Editar lembrete';
+  document.getElementById('lembreteSubmit').textContent = 'Salvar alterações';
+  document.getElementById('lembreteCancelar').style.display = '';
+}
+function cancelarEdicaoLembrete(){
+  lembreteEditId = null;
+  document.getElementById('lembreteTitulo').value = '';
+  document.getElementById('lembreteHora').value = '22:00';
+  document.getElementById('lembreteFreq').value = 'diario';
+  document.getElementById('lembreteAtivo').checked = true;
+  document.getElementById('lembreteFormTitulo').textContent = 'Novo lembrete';
+  document.getElementById('lembreteSubmit').textContent = 'Criar lembrete';
+  document.getElementById('lembreteCancelar').style.display = 'none';
+}
+function toggleLembrete(id){
+  const l = data.lembretes.find(x => x.id === id);
+  if(!l) return;
+  l.ativo = !l.ativo;
+  saveData();
+}
+function removerLembrete(id){
+  const l = data.lembretes.find(x => x.id === id);
+  if(!confirm('Tem certeza que deseja excluir o lembrete "' + (l ? l.titulo : '') + '"?')) return;
+  data.lembretes = data.lembretes.filter(x => x.id !== id);
+  if(lembreteEditId === id) cancelarEdicaoLembrete();
+  saveData();
+}
+function renderLembretes(){
+  const el = document.getElementById('listaLembretes');
+  if(!el) return;
+  const lista = data.lembretes.slice().sort((a,b) => a.hora.localeCompare(b.hora));
+  el.innerHTML = lista.length ? lista.map(l => `
+    <div class="item">
+      <div class="info">
+        <div class="name">${escHtml(l.titulo)}</div>
+        <div class="meta">⏰ ${l.hora} · ${rotuloFrequencia(l.frequencia)}</div>
+      </div>
+      <div class="right">
+        <input type="checkbox" class="lembrete-switch" ${l.ativo ? 'checked' : ''} onchange="toggleLembrete('${l.id}')" aria-label="Ativar ou desativar">
+        <button class="edit-btn" onclick="editarLembrete('${l.id}')" aria-label="Editar">${ICONE_LAPIS}</button>
+        <button class="del" onclick="removerLembrete('${l.id}')">✕</button>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">Nenhum lembrete cadastrado ainda.</div>';
+}
+
 render();
+atualizarStatusNotificacoes();
+verificarLembretes();
+setInterval(verificarLembretes, 60000);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) verificarLembretes(); });
 </script>
 </body>
 </html>
